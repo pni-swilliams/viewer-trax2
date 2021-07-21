@@ -1,0 +1,11 @@
+{
+    "modules": [
+      {
+        "type": "sandbox",
+        "name": "viewer-trax2",
+        "folder": "./",
+        "entry": "index.html"
+      }
+    ],
+    "port": 8080
+  }
