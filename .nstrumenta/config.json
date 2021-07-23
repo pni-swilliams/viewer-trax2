@@ -3,7 +3,7 @@
       {
         "type": "sandbox",
         "name": "viewer-trax2",
-        "folder": "./",
+        "folder": "viewer-trax2",
         "entry": "index.html"
       }
     ],
