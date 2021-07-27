@@ -1,5 +1,27 @@
 var myLayout;
-var labels = {};
+var labels = {
+  1012: {
+    name: "Trax2",
+    type: "input",
+    traces: [
+      "Heading",
+      "Pitch",
+      "Roll",
+      "MagX",
+      "MagY",
+      "MagZ",
+      "AccelX",
+      "AccelY",
+      "AccelZ",
+      "GyroX",
+      "GyroY",
+      "GyroZ",
+      "Heading Status",
+      "Temperature",
+      "Distortion",
+    ],
+  },
+};
 
 function initLayout() {
   const config = {
@@ -32,19 +54,15 @@ function initLayout() {
 initLayout();
 
 var plots = {};
+var scatterPlots = {};
 
 function renderEvents(name, events) {
   events.forEach((event) => {
     addEventToPlots(name, event);
+    // create scatterPlot for mag indices 3,4,5
+    addEventToScatterPlots(name, event, [3, 4, 5]);
   });
   updatePlots();
-}
-
-function renderFiles() {
-  clear();
-  for (fileName in inputFiles) {
-    renderEvents(fileName, inputFiles[fileName]);
-  }
 }
 
 function getPlotName(id) {
@@ -58,10 +76,14 @@ function updatePlots() {
   for (index in plots) {
     plots[index].update();
   }
+  for (index in scatterPlots) {
+    scatterPlots[index].update();
+  }
 }
 
 function clear() {
   plots = {};
+  scatterPlots = {};
   myLayout.destroy();
   initLayout();
 }
@@ -73,6 +95,14 @@ function addEventToPlots(name, event) {
     plots[plotId] = new Plot(plotId, event);
   }
   plots[plotId].addEvent(event);
+}
+
+function addEventToScatterPlots(name, event, indices) {
+  const plotId = "scatter-" + name;
+  if (!scatterPlots.hasOwnProperty(plotId)) {
+    scatterPlots[plotId] = new ScatterPlot(plotId, event, indices);
+  }
+  scatterPlots[plotId].addEvent(event);
 }
 
 function takeScreenShot() {
@@ -89,24 +119,94 @@ function takeScreenShot() {
   });
 }
 
+class ScatterPlot {
+  constructor(id, event, indices) {
+    this.id = id;
+    this.data = [];
+    this.indices = indices;
+    this.plotName =
+      labels[event.id].traces[this.indices[0]] +
+      labels[event.id].traces[this.indices[1]] +
+      labels[event.id].traces[this.indices[2]];
+
+    let relayout;
+
+    myLayout.registerComponent(this.plotName, function (container, state) {
+      relayout = async () => {
+        var update = {
+          width: container.width,
+          height: container.height,
+        };
+        // Plotly.relayout(container, update);
+        if (document.getElementById(state.componentName) != null) {
+          try {
+            Plotly.relayout(state.componentName, update);
+          } catch (e) {}
+        }
+      };
+      container
+        .getElement()
+        .html('<div id="' + state.componentName + '"></div>');
+      container.on("resize", function () {
+        relayout();
+      });
+    });
+    myLayout.root.contentItems[0].addChild({
+      type: "component",
+      componentName: this.plotName,
+    });
+    Plotly.react(
+      this.plotName,
+      this.data,
+      {},
+      {
+        displayModeBar: false,
+      }
+    ).then(() => {
+      relayout();
+    });
+  }
+
+  clearData() {
+    for (var i = 0; i < this.data.length; i++) {
+      this.data[i].x = [];
+      this.data[i].y = [];
+      this.data[i].z = [];
+    }
+    //this.update()
+  }
+
+  addEvent(event) {
+    if (!this.data[0]) {
+      this.data.push({
+        x: [],
+        y: [],
+        z: [],
+        type: "scatter3d",
+      });
+    }
+    this.data[0].x.push(event.values[this.indices[0]]);
+    this.data[0].y.push(event.values[this.indices[1]]);
+    this.data[0].z.push(event.values[this.indices[2]]);
+  }
+  update() {
+    Plotly.react(
+      this.plotName,
+      this.data,
+      { datarevision: Date.now() },
+      {
+        displayModeBar: false,
+      }
+    );
+  }
+}
+
 class Plot {
   constructor(id, event) {
     this.id = id;
     this.plotName = getPlotName(this.id);
     this.eventIdMap = {};
     this.data = [];
-    // for (var i = 0; i < event.values.length; i++) {
-    //   var emptyTrace = {
-    //     x: [],
-    //     y: []
-    //   };
-    //   if (labels.hasOwnProperty(this.id)) {
-    //     if (labels[this.id].traces[i] != null) {
-    //       emptyTrace.name = labels[this.id].traces[i];
-    //     }
-    //   }
-    //   this.data.push(emptyTrace);
-    // }
 
     let relayout;
 
