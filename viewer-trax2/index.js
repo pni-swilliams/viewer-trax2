@@ -60,16 +60,9 @@ function renderEvents(name, events) {
   events.forEach((event) => {
     addEventToPlots(name, event);
     // create scatterPlot for mag indices 3,4,5
-    addEventToScatterPlots(name, event, [3, 4, 5]);
+    // addEventToScatterPlots(name, event, [3, 4, 5]);
   });
   updatePlots();
-}
-
-function getPlotName(id) {
-  if (labels && labels.hasOwnProperty(id)) {
-    return labels[id].name;
-  }
-  return id;
 }
 
 function updatePlots() {
@@ -92,6 +85,7 @@ var lastPlotUpdate = 0;
 function addEventToPlots(name, event) {
   var plotId = name;
   if (!plots.hasOwnProperty(plotId)) {
+    console.log(plots, plotId);
     plots[plotId] = new Plot(plotId, event);
   }
   plots[plotId].addEvent(event);
@@ -124,10 +118,7 @@ class ScatterPlot {
     this.id = id;
     this.data = [];
     this.indices = indices;
-    this.plotName =
-      labels[event.id].traces[this.indices[0]] +
-      labels[event.id].traces[this.indices[1]] +
-      labels[event.id].traces[this.indices[2]];
+    this.plotName = event.id;
 
     let relayout;
 
@@ -204,7 +195,7 @@ class ScatterPlot {
 class Plot {
   constructor(id, event) {
     this.id = id;
-    this.plotName = getPlotName(this.id);
+    this.plotName = this.id;
     this.eventIdMap = {};
     this.data = [];
 
