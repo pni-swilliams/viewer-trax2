@@ -1,17 +1,22 @@
 {
-    "modules": [
-      {
-        "type": "sandbox",
-        "name": "viewer-trax2",
-        "folder": "viewer-trax2",
-        "entry": "index.html"
-      },
-      {
-        "type": "sandbox",
-        "name": "minimal",
-        "folder": "minimal",
-        "entry": "index.html"
-      }
-    ],
-    "port": 8080
-  }
+  "modules": [
+    {
+      "type": "algorithm",
+      "name": "fusion",
+      "folder": "fusion"
+    },
+    {
+      "type": "sandbox",
+      "name": "viewer-trax2",
+      "folder": "viewer-trax2",
+      "entry": "index.html"
+    },
+    {
+      "type": "sandbox",
+      "name": "minimal",
+      "folder": "minimal",
+      "entry": "index.html"
+    }
+  ],
+  "port": 8080
+}
