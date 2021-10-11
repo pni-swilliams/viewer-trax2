@@ -13,7 +13,7 @@
 3. Click Start Recording, wave the device around to make an interesting log, and then click Stop Recording to finish the log
 
 ## View Data
-1. Your recording will be listing in the Data page in your nstrumenta project
+1. Your recording will be listed in the Data page in your nstrumenta project
 2. clicking on the name will open a time series plot
 ![image](https://user-images.githubusercontent.com/41758588/123737404-c263b200-d857-11eb-978c-5ab62d52ffbc.png)
 

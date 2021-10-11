@@ -17,6 +17,5 @@
       "folder": "minimal",
       "entry": "index.html"
     }
-  ],
-  "port": 8080
+  ]
 }
