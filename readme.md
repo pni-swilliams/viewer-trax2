@@ -17,18 +17,23 @@ https://github.com/apps/nstrumenta-github
 1. Open the Record page in your nstrumenta project
 ![image](https://user-images.githubusercontent.com/41758588/123739589-bb3ea300-d85b-11eb-8eac-8ed537c47ef4.png)
 2. Configure inputs to record, for this example, open nstrumenta from a mobile phone and select the Device Motion input to record the inertial sensors on your device.
-3. Click Start Recording, wave the device around to make an interesting log, and then click Stop Recording to finish the log
+3. Click 'Start Recording', wave the device around to make an interesting log, and then click Stop Recording to finish the log
 
 ## View Data
 1. Your recording will be listed in the Data page in your nstrumenta project
-2. clicking on the name will open a time series plot
+2. Clicking on the name will open a time series plot
 ![image](https://user-images.githubusercontent.com/41758588/123737404-c263b200-d857-11eb-978c-5ab62d52ffbc.png)
 
-## Edit your code in VS Code
-1. clone your repository locally
-2. open the root folder in VS Code
-3. install the nstrumenta VS Code extension![image](https://user-images.githubusercontent.com/41758588/123737979-d22fc600-d858-11eb-876b-a7c29f867d8b.png)
-4. click on the grayed out VS Code logo in nstrumenta and select Init to initialize the connection <img src="https://user-images.githubusercontent.com/41758588/123738117-10c58080-d859-11eb-9e65-0fb4d8e0b2c1.png" width="200" />
-5. When successfully initialized, the logo will turn blue and you can ping to test the connection
-6. use the nstrumenta.update command in VS Code to update your project with the latest from your repository
-![image](https://user-images.githubusercontent.com/41758588/123738481-b973e000-d859-11eb-9102-ee79888909b7.png)
+## Add a Sandbox
+1. Clone your project locally and open in VS Code
+2. Install the nstrumenta-vscode plugin
+ ![image](https://user-images.githubusercontent.com/41758588/137570326-5cf6868b-feda-4e60-ae3b-539f712c78c8.png)
+
+3. While you have the VS Code window open, also open your nstrumenta project
+4. Initialize the connection tp VS Code by clicking on the VS Code logo in the top right and selecting 'init'  ![image](https://user-images.githubusercontent.com/41758588/137570387-e266d339-607e-4547-a69b-cdc4286e9b3e.png)
+5. If connected the VS Code will change to a color from grey (you can test the connection with 'ping' from the same window) ![image](https://user-images.githubusercontent.com/41758588/137570488-3f801f41-3606-446f-a65c-433d1b4ca137.png)
+6.  Open the Command Pallete (Ctrl/Cmd)+Shift+P
+7.  Enter the command nstrumenta: update  ![image](https://user-images.githubusercontent.com/41758588/137570398-a1aa82c9-1b6e-4429-b5fd-7cc7d3e91a5f.png)
+
+## Making a commit in your repository will also trigger an update from GitHub
+1. Edit a file, for example add a line to the Readme.md and commit
