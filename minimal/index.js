@@ -1,29 +1,34 @@
 var nstrumenta;
 
 function initNstrumenta() {
-  console.log('initNstrumenta');
+  console.log("initNstrumenta");
   nstrumenta = new Nstrumenta.SandboxClient();
 
-  console.log('subscribing to channel server-status');
-  nstrumenta.subscribe('server-status', (channelMessage) => {
-    console.log('sandbox index.js subscribe', channelMessage);
-    const { message } = channelMessage;
-    document.getElementById('server-status').innerText = message;
+  console.log("subscribing to host status channel");
+  nstrumenta.subscribe("_host-status", (message) => {
+    document.getElementById("host-status").innerText = JSON.stringify(message);
   });
 }
 
 function send() {
-  const channel = document.getElementById('channel').value;
-  const message = document.getElementById('message').value;
+  const channel = document.getElementById("channel").value;
+  const message = document.getElementById("message").value;
 
   nstrumenta.send(channel, message);
 }
 
 const receivedMessages = [];
 function subscribe() {
-  const channel = document.getElementById('subscribeChannel').value;
-  nstrumenta.subscribe(channel, (channelMessage) => {
-    receivedMessages.push(JSON.stringify(channelMessage));
-    document.getElementById('outputTextArea').value = receivedMessages.slice(-100).join('\n');
+  const channel = document.getElementById("subscribeChannel").value;
+  nstrumenta.subscribe(channel, (contents) => {
+    const message =
+      contents instanceof ArrayBuffer
+        ? new TextDecoder("utf-8").decode(contents)
+        : JSON.stringify(contents);
+
+    receivedMessages.push(message);
+    document.getElementById("outputTextArea").value = receivedMessages
+      .slice(-100)
+      .join("\n");
   });
 }
