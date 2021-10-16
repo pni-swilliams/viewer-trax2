@@ -6,6 +6,13 @@
 3. Add the repository you created to your project
 ![image](https://user-images.githubusercontent.com/41758588/123736482-0bb30200-d856-11eb-8f1c-634953fbffa4.png)
 
+4. Add the nstrumenta app to your repository in the github web interface:
+https://github.com/apps/nstrumenta-github
+
+![image](https://user-images.githubusercontent.com/41758588/137569132-f530c38b-902b-4d53-ba46-e8547c0386df.png)
+
+![image](https://user-images.githubusercontent.com/41758588/137569141-5ec69276-5c7c-4375-896f-6d98af2b3ccf.png)
+
 ## Record Data
 1. Open the Record page in your nstrumenta project
 ![image](https://user-images.githubusercontent.com/41758588/123739589-bb3ea300-d85b-11eb-8eac-8ed537c47ef4.png)
