@@ -20,8 +20,8 @@
     {
       "type": "sandbox",
       "name": "studio",
-      "folder": "studio/build",
-      "entry": "index.html"
+      "folder": "studio",
+      "entry": "build/index.html"
     }
   ]
 }
