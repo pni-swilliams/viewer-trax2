@@ -20,8 +20,8 @@ function App() {
 
     nstClient.addListener("open", () => {
       console.log("nst client open");
-      nstClient.subscribe("trax-events", (message) => {
-        console.log("trax-events", message);
+      nstClient.subscribe("serialport-events", (message) => {
+        console.log("serialport-events", message);
         switch (message.type) {
           case "open":
             // kGetModInfo
@@ -32,8 +32,8 @@ function App() {
             nstClient.sendBuffer("trax-in", kGetModInfoCommand);
         }
       });
-      nstClient.subscribe("trax", (message) => {
-        console.log("trax", message);
+      nstClient.subscribe("trax2", (message) => {
+        console.log("trax2", message);
       });
 
     
