@@ -9,7 +9,7 @@ export default class DataBuffer {
     }
 
     validate(data: Uint8Array) {
-        if (data[1] == data.length) {
+        if (data[1] === data.length) {
             return true;
         }
     }
