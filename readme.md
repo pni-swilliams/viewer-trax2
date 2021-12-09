@@ -37,3 +37,5 @@ https://github.com/apps/nstrumenta-github
 
 ## Making a commit in your repository will also trigger an update from GitHub
 1. Edit a file, for example add a line to the Readme.md and commit
+
+## React App example for Trax2 Studio
