@@ -1,14 +1,14 @@
-import {
-  Button,
-  Grid,
-  Table,
-  TableBody,
-  TableRow,
-  TextField,
-} from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import { NstrumentaClient } from "nstrumenta";
-import React, { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEventHandler,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import "./App.css";
+import DataBuffer from "./DataBuffer";
 // CRC implementation from TRAX2 User Manual
 // function(CRC(void * data, UInt32 len) {
 //   UInt8 * dataPtr = (UInt8 *)data;
@@ -29,8 +29,11 @@ function App() {
   const [traxState, setTraxState] = useState<string>();
   const [modInfo, setModInfo] = useState<string>();
   const [traxMessage, setTraxMessage] = useState<Uint8Array>();
-  const [incomingMessages, setIncomingMessages] = useState<Array<{}>>([]);
 
+  const dataRef = useRef<DataBuffer>();
+  // store data in dataRef and forceUpdate for re-render
+  // eslint-disable-next-line
+  const [_, forceUpdate] = useReducer((x: number) => x + 1, 0);
   const nstRef = useRef<NstrumentaClient>();
 
   const traxWithCrc16 = (data: number[]): Uint8Array => {
@@ -51,11 +54,7 @@ function App() {
   };
 
   function toHexString(byteArray: Uint8Array) {
-    var s = "";
-    byteArray.forEach(function (byte) {
-      s += `${(byte & 0xff).toString(16).slice(-2)},`;
-    });
-    return s.slice(0, s.length - 1);
+    return [...byteArray].map((x) => x.toString(16).padStart(2, "0")).join(" ");
   }
 
   const getModInfo = () => {
@@ -76,7 +75,13 @@ function App() {
   > = (e) => {
     console.log(e.target.value);
     try {
-      const tryParse = traxWithCrc16(JSON.parse(e.target.value));
+      const numberArray = e.target.value
+        .replace("[", "")
+        .replace("]", "")
+        .split(",")
+        .map((str) => Number(str));
+
+      const tryParse = traxWithCrc16(numberArray);
       console.log(tryParse);
       setTraxMessage(tryParse);
     } catch {}
@@ -96,6 +101,8 @@ function App() {
 
     nstRef.current = nstClient;
 
+    dataRef.current = new DataBuffer(100);
+
     console.log("connecting to ", wsUrl);
 
     nstClient.addListener("open", () => {
@@ -105,14 +112,14 @@ function App() {
         switch (message.type) {
           case "open":
             setTraxState("open");
-            getModInfo();
         }
       });
       nstClient.subscribe("trax2", (message) => {
         if (traxState !== "open") setTraxState("open");
 
-        incomingMessages.push(message.data);
-        setIncomingMessages(incomingMessages);
+        dataRef.current?.add(new Uint8Array(message.data));
+        forceUpdate();
+
         console.log("trax2", message);
         const frameId = message.data[2];
         switch (frameId) {
@@ -149,7 +156,7 @@ function App() {
         <Grid item xs={4}>
           <TextField
             id="outlined-basic"
-            label="decimal: [0,5,1]"
+            label="[0x00,0x05,0x01]"
             variant="outlined"
             onChange={updateMessage}
           />
@@ -169,14 +176,15 @@ function App() {
             Send
           </Button>
         </Grid>
-        <Grid item xs={12}>
-          {incomingMessages
-            ?.map((message) => {
-              return JSON.stringify(message);
-            })
-            .join("\n")}
-        </Grid>
       </Grid>
+      <div style={{ width: "100%", whiteSpace: "pre-line" }}>
+        {dataRef.current?.buffer
+          .reverse()
+          .map((message) => {
+            return toHexString(message);
+          })
+          .join("\n")}
+      </div>
     </div>
   );
 }
