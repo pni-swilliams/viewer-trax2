@@ -1,20 +1,85 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./App.css";
+import {
+  Button,
+  Grid,
+  Table,
+  TableBody,
+  TableRow,
+  TextField,
+} from "@mui/material";
 import { NstrumentaClient } from "nstrumenta";
-import { Button, Typography } from "@mui/material";
+import React, { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import "./App.css";
+// CRC implementation from TRAX2 User Manual
+// function(CRC(void * data, UInt32 len) {
+//   UInt8 * dataPtr = (UInt8 *)data;
+//   UInt32 index = 0;
+//   // Update the CRC for transmitted and received data using // the CCITT 16bit algorithm (X^16 + X^12 + X^5 + 1). UInt16 crc = 0;
+//   while(len--)
+//   {
+//   crc = (unsigned char)(crc >> 8) | (crc << 8);
+//   crc ^= dataPtr[index++];
+//   crc ^= (unsigned char)(crc & 0xff) >> 4;
+//   crc ^= (crc << 8) << 4;`
+//   crc ^= ((crc & 0xff) << 4) << 1;
+//   }
+//   return crc;
+//   }
 
 function App() {
   const [traxState, setTraxState] = useState<string>();
   const [modInfo, setModInfo] = useState<string>();
+  const [traxMessage, setTraxMessage] = useState<Uint8Array>();
+  const [incomingMessages, setIncomingMessages] = useState<Array<{}>>([]);
 
   const nstRef = useRef<NstrumentaClient>();
+
+  const traxWithCrc16 = (data: number[]): Uint8Array => {
+    let index = 0;
+    let crc = 0;
+    for (let i = data.length - 1; i >= 0; i--) {
+      crc = (crc >> 8) | (crc << 8);
+      crc ^= data[index++];
+      crc ^= (crc & 0xff) >> 4;
+      crc ^= (crc << 8) << 4;
+      crc ^= ((crc & 0xff) << 4) << 1;
+    }
+    return Uint8Array.from([
+      ...data,
+      (crc & 0xff00) >> 8,
+      crc & 0x00ff,
+    ] as number[]);
+  };
+
+  function toHexString(byteArray: Uint8Array) {
+    var s = "";
+    byteArray.forEach(function (byte) {
+      s += `${(byte & 0xff).toString(16).slice(-2)},`;
+    });
+    return s.slice(0, s.length - 1);
+  }
 
   const getModInfo = () => {
     if (!nstRef.current) return;
     // kGetModInfo
-    const kGetModInfoCommand = new Uint8Array([0x00, 0x05, 0x01, 0xef, 0xd4]);
+    const kGetModInfoCommand = traxWithCrc16([0x00, 0x05, 0x01]);
     console.log("sending kGetModInfo", kGetModInfoCommand);
     nstRef.current.sendBuffer("trax-in", kGetModInfoCommand);
+  };
+
+  const sendBytes = (bytes: Uint8Array) => {
+    if (!nstRef.current) return;
+    nstRef.current.sendBuffer("trax-in", bytes);
+  };
+
+  const updateMessage: ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (e) => {
+    console.log(e.target.value);
+    try {
+      const tryParse = traxWithCrc16(JSON.parse(e.target.value));
+      console.log(tryParse);
+      setTraxMessage(tryParse);
+    } catch {}
   };
 
   useEffect(() => {
@@ -45,6 +110,9 @@ function App() {
       });
       nstClient.subscribe("trax2", (message) => {
         if (traxState !== "open") setTraxState("open");
+
+        incomingMessages.push(message.data);
+        setIncomingMessages(incomingMessages);
         console.log("trax2", message);
         const frameId = message.data[2];
         switch (frameId) {
@@ -55,6 +123,10 @@ function App() {
             console.log(JSON.stringify(message), modInfo);
             setModInfo(modInfo);
             break;
+          case 0x05:
+            console.log("data");
+            break;
+
           default:
             console.log(`unhandled frame ID: ${frameId}`, message);
             break;
@@ -67,12 +139,44 @@ function App() {
 
   return (
     <div className="App">
-      <Typography>
-        <Button variant="contained" onClick={getModInfo}>
-          kGetModInfo
-        </Button>
-        {modInfo}
-      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Button variant="contained" onClick={getModInfo}>
+            kGetModInfo
+          </Button>
+          {modInfo}
+        </Grid>
+        <Grid item xs={4}>
+          <TextField
+            id="outlined-basic"
+            label="decimal: [0,5,1]"
+            variant="outlined"
+            onChange={updateMessage}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          {traxMessage ? toHexString(traxMessage) : null}
+        </Grid>
+        <Grid item xs={1}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              if (traxMessage) {
+                sendBytes(traxMessage);
+              }
+            }}
+          >
+            Send
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          {incomingMessages
+            ?.map((message) => {
+              return JSON.stringify(message);
+            })
+            .join("\n")}
+        </Grid>
+      </Grid>
     </div>
   );
 }
