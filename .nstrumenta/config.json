@@ -16,6 +16,12 @@
       "name": "minimal",
       "folder": "minimal",
       "entry": "index.html"
+    },
+    {
+      "type": "sandbox",
+      "name": "studio",
+      "folder": "studio",
+      "entry": "build/index.html"
     }
   ]
 }
