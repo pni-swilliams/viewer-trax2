@@ -3,25 +3,35 @@
     {
       "type": "algorithm",
       "name": "fusion",
-      "folder": "fusion"
+      "folder": "fusion",
+      "version": "1.0.0"
     },
     {
       "type": "sandbox",
       "name": "viewer-trax2",
       "folder": "viewer-trax2",
-      "entry": "index.html"
+      "entry": "index.html",
+      "version": "1.0.0"
     },
     {
       "type": "sandbox",
       "name": "minimal",
       "folder": "minimal",
-      "entry": "index.html"
+      "entry": "index.html",
+      "version": "1.0.0"
     },
     {
       "type": "sandbox",
       "name": "studio",
       "folder": "studio",
-      "entry": "build/index.html"
+      "entry": "build/index.html",
+      "version": "1.0.0"
+    },
+    {
+      "type": "module",
+      "name": "trax2-serialport",
+      "folder": "trax2-serialport",
+      "version": "1.0.0"
     }
   ]
 }

@@ -94,8 +94,7 @@ function App() {
     const wsUrl = wsUrlParam ? wsUrlParam : "ws://localhost:8088";
 
     const nstClient = new NstrumentaClient({
-      apiKey: "",
-      projectId: "",
+      apiKey: "f4c560a4-6558-4090-b827-9070c6c4fb3d",
       wsUrl,
     });
 

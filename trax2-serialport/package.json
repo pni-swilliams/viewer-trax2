@@ -1,0 +1,23 @@
+{
+  "name": "trax2-serialport",
+  "version": "1.0.0",
+  "description": "trax2 serialport interface",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyler Bryant",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "minimist": "^1.2.5",
+    "nstrumenta": "^1.0.42",
+    "serialport": "^9.2.8",
+    "ws": "^8.4.0"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.2",
+    "@types/serialport": "^8.0.2",
+    "@types/ws": "^8.2.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.6.0-dev.20220103"
+  }
+}
