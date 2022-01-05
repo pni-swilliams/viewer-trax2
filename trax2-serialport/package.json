@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "trax2 serialport interface",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/index.ts"
   },
   "author": "Tyler Bryant",
   "license": "UNLICENSED",
   "dependencies": {
     "minimist": "^1.2.5",
-    "nstrumenta": "^1.0.42",
+    "nstrumenta": "^1.0.44",
     "serialport": "^9.2.8",
     "ws": "^8.4.0"
   },
