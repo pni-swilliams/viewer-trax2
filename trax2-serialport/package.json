@@ -1,15 +1,15 @@
 {
   "name": "trax2-serialport",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "trax2 serialport interface",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/index.ts"
   },
   "author": "Tyler Bryant",
   "license": "UNLICENSED",
   "dependencies": {
     "minimist": "^1.2.5",
-    "nstrumenta": "^1.0.42",
+    "nstrumenta": "^1.0.45",
     "serialport": "^9.2.8",
     "ws": "^8.4.0"
   },

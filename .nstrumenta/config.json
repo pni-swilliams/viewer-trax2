@@ -1,6 +1,12 @@
 {
   "modules": [
     {
+      "type": "nodejs",
+      "name": "trax2-serialport",
+      "folder": "trax2-serialport",
+      "version": "1.0.8"
+    },
+    {
       "type": "algorithm",
       "name": "fusion",
       "folder": "fusion",
@@ -25,12 +31,6 @@
       "name": "studio",
       "folder": "studio",
       "entry": "build/index.html",
-      "version": "1.0.0"
-    },
-    {
-      "type": "module",
-      "name": "trax2-serialport",
-      "folder": "trax2-serialport",
       "version": "1.0.0"
     }
   ]

@@ -32,7 +32,7 @@ var serialDevices = [
   {
     name: "trax2",
     vendorId: "0403",
-    productId: "6015",
+    productId: "6001",
     baudRate: 38600,
   },
 ];
