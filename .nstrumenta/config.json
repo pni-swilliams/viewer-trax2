@@ -4,7 +4,7 @@
       "type": "nodejs",
       "name": "trax2-serialport",
       "folder": "trax2-serialport",
-      "version": "1.0.8"
+      "version": "1.0.11"
     },
     {
       "type": "algorithm",
@@ -31,7 +31,7 @@
       "name": "studio",
       "folder": "studio",
       "entry": "build/index.html",
-      "version": "1.0.0"
+      "version": "1.0.1"
     }
   ]
 }

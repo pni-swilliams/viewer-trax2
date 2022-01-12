@@ -5,7 +5,7 @@ import fs from "fs";
 import ws from "ws";
 
 const argv = minimist(process.argv.slice(2));
-const wsUrl = argv.wsUrl;
+const wsUrl = argv.wsUrl || 'ws://localhost:8088';
 const apiKey = argv.apiKey;
 
 const debug = argv.debug ? argv.debug : false;

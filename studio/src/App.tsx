@@ -40,11 +40,11 @@ function App() {
     let index = 0;
     let crc = 0;
     for (let i = data.length - 1; i >= 0; i--) {
-      crc = (crc >> 8) | (crc << 8);
+      crc = ((crc >> 8) | (crc << 8)) & 0xffff;
       crc ^= data[index++];
       crc ^= (crc & 0xff) >> 4;
-      crc ^= (crc << 8) << 4;
-      crc ^= ((crc & 0xff) << 4) << 1;
+      crc ^= ((crc << 8) << 4) & 0xffff;
+      crc ^= (((crc & 0xff) << 4) << 1) & 0xffff;
     }
     return Uint8Array.from([
       ...data,
@@ -78,8 +78,8 @@ function App() {
       const numberArray = e.target.value
         .replace("[", "")
         .replace("]", "")
-        .split(",")
-        .map((str) => Number(str));
+        .split(/[ ,]+/)
+        .map((str) => parseInt(str,16));
 
       const tryParse = traxWithCrc16(numberArray);
       console.log(tryParse);

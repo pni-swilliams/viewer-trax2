@@ -1,15 +1,17 @@
 {
   "name": "trax2-serialport",
-  "version": "1.0.8",
+  "version": "1.0.12",
   "description": "trax2 serialport interface",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "build": "npx tsc --project .",
+    "start": "npm run build ; node dist/index.js",
+    "ls": "ls"
   },
   "author": "Tyler Bryant",
   "license": "UNLICENSED",
   "dependencies": {
     "minimist": "^1.2.5",
-    "nstrumenta": "^1.0.45",
+    "nstrumenta": "^1.0.48",
     "serialport": "^9.2.8",
     "ws": "^8.4.0"
   },
