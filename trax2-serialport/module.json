@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/nstrumenta/nstrumenta/main/src/lib/module.schema.json",
+    "type" : "nodejs",
+    "name": "gpio-rpi",
+    "version": "1.0.14",
+    "excludes": [
+        "node_modules/"
+    ]
+}
