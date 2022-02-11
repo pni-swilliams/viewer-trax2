@@ -5,16 +5,15 @@ import fs from "fs";
 import ws from "ws";
 
 const argv = minimist(process.argv.slice(2));
-const wsUrl = argv.wsUrl || 'ws://localhost:8088';
 const apiKey = argv.apiKey;
 
 const debug = argv.debug ? argv.debug : false;
 
 let serialPort: SerialPort | undefined = undefined;
 
-const nst = wsUrl ? new NstrumentaClient({ apiKey, wsUrl }) : null;
+const nst = new NstrumentaClient(apiKey);
 if (nst) {
-  console.log("nst wsUrl:", wsUrl)
+  console.log("nst wsUrl:", wsUrl);
 }
 
 nst?.addListener("open", () => {
@@ -26,7 +25,7 @@ if (!nst) {
   scan();
 }
 
-nst?.init(ws as any);
+nst?.connect({ nodeWebSocket: ws as any });
 
 var serialDevices = [
   {
@@ -49,8 +48,16 @@ if (fs.existsSync("nst-serialport-config.json")) {
   console.log("nst-serialport-config.json end");
 }
 
-
-function match(devicePort: SerialPort.PortInfo, device: { name?: string; vendorId: any; productId: any; baudRate?: number; path?: any; }) {
+function match(
+  devicePort: SerialPort.PortInfo,
+  device: {
+    name?: string;
+    vendorId: any;
+    productId: any;
+    baudRate?: number;
+    path?: any;
+  }
+) {
   var match: boolean | "" | undefined = false;
   //match on path from config file
   if (device.path) {
@@ -79,10 +86,10 @@ function scan() {
           });
 
           serialPort.on("open", function () {
-            nst?.send("serialport-events", { "type": "open", serialDevice });
+            nst?.send("serialport-events", { type: "open", serialDevice });
             nst?.subscribe("trax-in", (message: number[]) => {
               const bytes = new Uint8Array(message);
-              console.log("trax-in", bytes)
+              console.log("trax-in", bytes);
               serialPort?.write(Array.from(bytes));
             });
           });
@@ -102,4 +109,3 @@ function scan() {
     });
   });
 }
-

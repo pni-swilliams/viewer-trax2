@@ -1,0 +1,30 @@
+{
+  "name": "minimal-nodejs-ts",
+  "version": "1.0.0",
+  "description": "minimal typescript nodejs nstrumenta module",
+  "scripts": {
+    "start": "npm run build ; node dist/index.js",
+    "build": "npx tsc -p .",
+    "dev": "nodemon"
+  },
+  "author": "Tyler Bryant",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/node": "^16.10.3",
+    "@types/ws": "^8.2.2",
+    "nodemon": "^2.0.13",
+    "prettier": "^2.2.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "semi": true
+  },
+  "dependencies": {
+    "nstrumenta": "^2.0.0",
+    "ws": "^8.4.2"
+  }
+}

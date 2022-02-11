@@ -11,7 +11,7 @@ node_modules
 ### Intentionally including the built artifacts to deploy to nstrumenta sandbox
 ### TODO add nstrumenta publish to directly publish sandboxes
 # production
-# build
+build
 
 
 # misc
