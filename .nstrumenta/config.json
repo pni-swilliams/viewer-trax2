@@ -1,13 +1,16 @@
 {
   "modules": [
     {
-      "folder": "minimal-nodejs-ts"
+      "folder": "minimal-nodejs-ts",
+      "name": "minimal-nodejs-ts"
     },
     {
-      "folder": "trax2-serialport"
+      "folder": "trax2-serialport",
+      "name": "trax2-serialport"
     },
     {
-      "folder": "studio"
+      "folder": "studio",
+      "name": "trax2-serialport"
     }
   ]
 }
