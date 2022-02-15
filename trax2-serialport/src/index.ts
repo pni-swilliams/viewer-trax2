@@ -6,12 +6,13 @@ import ws from "ws";
 
 const argv = minimist(process.argv.slice(2));
 const apiKey = argv.apiKey;
+const wsUrl = argv.wsUrl;
 
 const debug = argv.debug ? argv.debug : false;
 
 let serialPort: SerialPort | undefined = undefined;
 
-const nst = new NstrumentaClient(apiKey);
+const nst = new NstrumentaClient();
 if (nst) {
   console.log("nst wsUrl:", wsUrl);
 }
@@ -25,7 +26,7 @@ if (!nst) {
   scan();
 }
 
-nst?.connect({ nodeWebSocket: ws as any });
+nst?.connect({ nodeWebSocket: ws as any, apiKey, wsUrl });
 
 var serialDevices = [
   {
@@ -87,7 +88,7 @@ function scan() {
 
           serialPort.on("open", function () {
             nst?.send("serialport-events", { type: "open", serialDevice });
-            nst?.subscribe("trax-in", (message: number[]) => {
+            nst?.addSubscription("trax-in", (message: number[]) => {
               const bytes = new Uint8Array(message);
               console.log("trax-in", bytes);
               serialPort?.write(Array.from(bytes));

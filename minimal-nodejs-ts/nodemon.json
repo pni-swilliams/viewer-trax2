@@ -1,5 +1,10 @@
 {
-  "watch": ["src"],
+  "watch": [
+    "src"
+  ],
   "ext": "ts",
-  "exec": "ts-node ./src/index.ts"
+  "exec": "ts-node ./src/index.ts",
+  "env": {
+    "NSTRUMENTA_API_KEY": "c58b164d-c6ea-41ff-bfe2-63c2f94ff87f"
+  }
 }

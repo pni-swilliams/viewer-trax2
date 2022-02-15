@@ -1,9 +1,10 @@
 {
     "$schema": "https://raw.githubusercontent.com/nstrumenta/nstrumenta/main/module.schema.json",
-    "type" : "nodejs",
-    "name": "trax2-serialport",
+    "type": "nodejs",
+    "name": "studio",
     "version": "1.0.0",
     "excludes": [
-        "node_modules/"
+        "node_modules/",
+        "build"
     ]
 }
