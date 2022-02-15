@@ -13,9 +13,6 @@
         "run-script",
         "dev"
       ],
-      "env": {
-        "NSTRUMENTA_API_KEY": "e4f20985-9b33-4b65-b141-b492db233a31"
-      },
       "runtimeExecutable": "npm",
       "skipFiles": [
         "<node_internals>/**"
