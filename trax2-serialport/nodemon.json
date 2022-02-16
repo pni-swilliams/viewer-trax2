@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "src"
+  ],
+  "ext": "ts",
+  "exec": "ts-node ./src/index.ts",
+  "env": {
+    "NSTRUMENTA_API_KEY": "api key",
+    "NSTRUMENTA_WS_URL": "ws://localhost:8088"
+  }
+}

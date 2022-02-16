@@ -5,8 +5,8 @@ import fs from "fs";
 import ws from "ws";
 
 const argv = minimist(process.argv.slice(2));
-const apiKey = argv.apiKey;
-const wsUrl = argv.wsUrl;
+const apiKey = process.env.NSTRUMENTA_API_KEY || argv.apiKey;
+const wsUrl = process.env.NSTRUMENTA_WS_URL || argv.wsUrl;
 
 const debug = argv.debug ? argv.debug : false;
 
