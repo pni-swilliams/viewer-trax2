@@ -1,0 +1,10 @@
+{
+    "$schema": "https://raw.githubusercontent.com/nstrumenta/nstrumenta/main/module.schema.json",
+    "type": "nodejs",
+    "name": "studio",
+    "version": "1.0.2",
+    "excludes": [
+        "node_modules/",
+        "build"
+    ]
+}

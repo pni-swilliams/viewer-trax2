@@ -1,37 +1,16 @@
 {
   "modules": [
     {
-      "type": "nodejs",
-      "name": "trax2-serialport",
+      "folder": "minimal-nodejs-ts",
+      "name": "minimal-nodejs-ts"
+    },
+    {
       "folder": "trax2-serialport",
-      "version": "1.0.11"
+      "name": "trax2-serialport"
     },
     {
-      "type": "algorithm",
-      "name": "fusion",
-      "folder": "fusion",
-      "version": "1.0.0"
-    },
-    {
-      "type": "sandbox",
-      "name": "viewer-trax2",
-      "folder": "viewer-trax2",
-      "entry": "index.html",
-      "version": "1.0.0"
-    },
-    {
-      "type": "sandbox",
-      "name": "minimal",
-      "folder": "minimal",
-      "entry": "index.html",
-      "version": "1.0.0"
-    },
-    {
-      "type": "sandbox",
-      "name": "studio",
       "folder": "studio",
-      "entry": "build/index.html",
-      "version": "1.0.1"
+      "name": "studio"
     }
   ]
 }

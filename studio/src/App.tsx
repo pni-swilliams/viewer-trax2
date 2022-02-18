@@ -79,7 +79,7 @@ function App() {
         .replace("[", "")
         .replace("]", "")
         .split(/[ ,]+/)
-        .map((str) => parseInt(str,16));
+        .map((str) => parseInt(str, 16));
 
       const tryParse = traxWithCrc16(numberArray);
       console.log(tryParse);
@@ -91,12 +91,14 @@ function App() {
     //get wsUrl from params if present
     const wsUrlParam = new URLSearchParams(window.location.search).get("wsUrl");
 
-    const wsUrl = wsUrlParam ? wsUrlParam : "ws://localhost:8088";
+    const wsUrl = wsUrlParam
+      ? new URL(wsUrlParam)
+      : new URL("ws://localhost:8088");
 
-    const nstClient = new NstrumentaClient({
-      apiKey: "f4c560a4-6558-4090-b827-9070c6c4fb3d",
-      wsUrl,
-    });
+    const apiKey =
+      new URLSearchParams(window.location.search).get("apiKey") || "";
+
+    const nstClient = new NstrumentaClient();
 
     nstRef.current = nstClient;
 
@@ -106,14 +108,17 @@ function App() {
 
     nstClient.addListener("open", () => {
       console.log("nst client open");
-      nstClient.subscribe("serialport-events", (message) => {
+      nstClient.addSubscription("serialport-events", (message) => {
         console.log("serialport-events", message);
         switch (message.type) {
           case "open":
             setTraxState("open");
         }
       });
-      nstClient.subscribe("trax2", (message) => {
+      nstClient.addSubscription("time", (message) => {
+        console.log(message);
+      });
+      nstClient.addSubscription("trax2", (message) => {
         if (traxState !== "open") setTraxState("open");
 
         dataRef.current?.add(new Uint8Array(message.data));
@@ -139,7 +144,7 @@ function App() {
         }
       });
     });
-    nstClient.init();
+    nstClient.connect({ wsUrl, apiKey });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
