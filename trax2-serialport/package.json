@@ -5,13 +5,13 @@
   "scripts": {
     "build": "npx tsc --project .",
     "start": "npm run build ; node dist/index.js",
-    "ls": "ls"
+    "dev": "nodemon"
   },
   "author": "Tyler Bryant",
   "license": "UNLICENSED",
   "dependencies": {
     "minimist": "^1.2.5",
-    "nstrumenta": "^2.0.7",
+    "nstrumenta": "^2.0.11",
     "serialport": "^9.2.8",
     "ws": "^8.4.0"
   },
@@ -19,6 +19,7 @@
     "@types/minimist": "^1.2.2",
     "@types/serialport": "^8.0.2",
     "@types/ws": "^8.2.2",
+    "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "typescript": "^4.6.0-dev.20220103"
   }

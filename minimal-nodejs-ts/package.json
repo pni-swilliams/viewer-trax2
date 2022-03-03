@@ -24,7 +24,7 @@
     "semi": true
   },
   "dependencies": {
-    "nstrumenta": "^2.0.7",
+    "nstrumenta": "^2.1.1",
     "ws": "^8.4.2"
   }
 }

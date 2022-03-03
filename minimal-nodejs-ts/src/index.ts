@@ -1,8 +1,9 @@
 import { ClientStatus, NstrumentaClient } from 'nstrumenta';
 import ws from 'ws';
-import { URL } from 'url';
 
 const nstClient = new NstrumentaClient();
+
+const wsUrl = process.env.NSTRUMENTA_WS_URL || 'ws://localhost:8088';
 
 setInterval(() => {
   if (nstClient.connection.status === ClientStatus.CONNECTED) {
@@ -20,5 +21,5 @@ nstClient.addListener('open', () => {
 
 nstClient.connect({
   nodeWebSocket: ws as any,
-  wsUrl: new URL('ws://localhost:8088'),
+  wsUrl,
 });

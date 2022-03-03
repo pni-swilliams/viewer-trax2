@@ -1,9 +1,10 @@
 {
     "$schema": "https://raw.githubusercontent.com/nstrumenta/nstrumenta/main/module.schema.json",
-    "type" : "nodejs",
+    "type": "nodejs",
     "name": "minimal-nodejs-ts",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "excludes": [
-        "node_modules/"
+        "node_modules/",
+        "nodemon.json"
     ]
 }
