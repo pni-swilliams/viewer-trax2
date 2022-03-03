@@ -1,6 +1,5 @@
 import { ClientStatus, NstrumentaClient } from 'nstrumenta';
 import ws from 'ws';
-import { URL } from 'url';
 
 const nstClient = new NstrumentaClient();
 
@@ -22,5 +21,5 @@ nstClient.addListener('open', () => {
 
 nstClient.connect({
   nodeWebSocket: ws as any,
-  wsUrl: new URL(wsUrl),
+  wsUrl,
 });
