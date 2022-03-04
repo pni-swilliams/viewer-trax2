@@ -91,9 +91,7 @@ function App() {
     //get wsUrl from params if present
     const wsUrlParam = new URLSearchParams(window.location.search).get("wsUrl");
 
-    const wsUrl = wsUrlParam
-      ? new URL(wsUrlParam)
-      : new URL("ws://localhost:8088");
+    const wsUrl = wsUrlParam ? wsUrlParam : "ws://localhost:8088";
 
     const apiKey =
       new URLSearchParams(window.location.search).get("apiKey") || "";
