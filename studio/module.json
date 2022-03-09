@@ -1,8 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/nstrumenta/nstrumenta/main/module.schema.json",
-    "type": "nodejs",
+    "type": "sandbox",
     "name": "studio",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "includes": [
         "build"
     ]
