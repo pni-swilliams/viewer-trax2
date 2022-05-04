@@ -1,5 +1,5 @@
 import { Button, Grid, TextField } from "@mui/material";
-import { NstrumentaClient } from "nstrumenta";
+import { NstrumentaBrowserClient } from 'nstrumenta/dist/browser/client';
 import React, {
   ChangeEventHandler,
   useEffect,
@@ -34,7 +34,7 @@ function App() {
   // store data in dataRef and forceUpdate for re-render
   // eslint-disable-next-line
   const [_, forceUpdate] = useReducer((x: number) => x + 1, 0);
-  const nstRef = useRef<NstrumentaClient>();
+  const nstRef = useRef<NstrumentaBrowserClient>();
 
   const traxWithCrc16 = (data: number[]): Uint8Array => {
     let index = 0;
@@ -94,9 +94,9 @@ function App() {
     const wsUrl = wsUrlParam ? wsUrlParam : "ws://localhost:8088";
 
     const apiKey =
-      new URLSearchParams(window.location.search).get("apiKey") || "";
+      new URLSearchParams(window.location.search).get("apiKey") || 'test-key';
 
-    const nstClient = new NstrumentaClient();
+    const nstClient = new NstrumentaBrowserClient();
 
     nstRef.current = nstClient;
 
@@ -142,7 +142,7 @@ function App() {
         }
       });
     });
-    nstClient.connect({ wsUrl, apiKey });
+    nstClient.connect({ wsUrl, apiKey, verify: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
