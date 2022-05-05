@@ -7,10 +7,10 @@ const wsUrl = 'ws://localhost:8088';
 const apiKey = 'test-key';
 
 const nstClient = new NstrumentaClient();
-nstClient.addSubscription('open', () => {
+nstClient.addListener('open', () => {
   console.log('opened');
 })
-nstClient.addSubscription('close', () => {
+nstClient.addListener('close', () => {
   console.log('closed');
 })
 const nstServer = new NstrumentaServer({
@@ -26,5 +26,5 @@ nstServer.run().then(() => {
     wsUrl,
     apiKey,
     verify: false,
-  })
+  });
 });
