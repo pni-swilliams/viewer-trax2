@@ -141,6 +141,20 @@ function App() {
             break;
         }
       });
+
+      const channel = 'test-channel'
+      const name = 'my_log';
+      nstClient.startLog(name, [channel])
+        .then(() => {
+          console.log('log started');
+          for (let i = 0; i < 12; i++) {
+            nstClient.send(channel, { i });
+          }
+          setTimeout(() => {
+            nstClient.finishLog(name)
+              .then(() => console.log('log done'));
+          }, 3000);
+        });
     });
     nstClient.connect({ wsUrl, apiKey, verify: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
